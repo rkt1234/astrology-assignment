@@ -1,4 +1,4 @@
 node_modules/
 .env
-./dataSeed.js
-
+./a.txt
+./dataSeed
