@@ -1,21 +1,28 @@
-const express = require('express')
+const express = require('express');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/authRoutes')
-const astrologersRoutes = require('./routes/astrologersRoutes')
-const appointmentsRoutes = require('./routes/appointmentsRoutes')
+const cors = require('cors');
+
+const authRoutes = require('./routes/authRoutes');
+const astrologersRoutes = require('./routes/astrologersRoutes');
+const appointmentsRoutes = require('./routes/appointmentsRoutes');
 
 dotenv.config();
 
-app = express()
-app.use(express.json())
+const app = express();
 
-app.use('/auth', authRoutes)
-app.use('/astrologers', astrologersRoutes)
-app.use('/appointments', appointmentsRoutes)
+// ✅ Enable CORS for all origins (use specific origin in production)
+app.use(cors());
 
-app.get('/',(req,res) => {
-    res.send(`Server is running at ${process.env.PORT}`)
-})
+// ✅ Middleware
+app.use(express.json());
 
+// ✅ Routes
+app.use('/auth', authRoutes);
+app.use('/astrologers', astrologersRoutes);
+app.use('/appointments', appointmentsRoutes);
 
-module.exports = app
+app.get('/', (req, res) => {
+  res.send(`Server is running at ${process.env.PORT}`);
+});
+
+module.exports = app;
