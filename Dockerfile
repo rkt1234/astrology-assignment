@@ -1,24 +1,26 @@
-# 1. Use Node.js base image
-FROM node:18-alpine
+# Base image
+FROM node:18
 
-# 2. Set working directory
-WORKDIR /src
+# Create app directory
+WORKDIR /app
 
-# 3. Copy package files and install dependencies
+# Install Prisma CLI globally
+RUN npm install -g prisma
+
+# Copy package files
 COPY package*.json ./
-RUN npm install --production
 
-# 4. Copy rest of the app
+# Install dependencies
+RUN npm install
+
+# Copy rest of the project
 COPY . .
 
-# 5. Generate Prisma client
+# Generate Prisma client
 RUN npx prisma generate
 
-# 6. Build if you're using TypeScript or frontend
-# RUN npm run build
-
-# 7. Expose the app port (adjust if different)
+# Expose port
 EXPOSE 3000
 
-# 8. Start the application
-CMD ["node", "src/server.js"]
+# Start server
+CMD ["npm", "run", "start"]
